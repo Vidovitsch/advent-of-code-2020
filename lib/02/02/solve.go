@@ -52,12 +52,12 @@ func ToInt(s string) int {
 
 func (password *Password) IsValid() bool {
 	p := strings.Split(password.Policy, " ")
-	frequencies, policyChar := strings.Split(p[0], "-"), p[1]
-	lowerFreq, upperFreq := ToInt(frequencies[0]), ToInt(frequencies[1])
+	indices, policyChar := strings.Split(p[0], "-"), p[1]
+	index1, index2 := ToInt(indices[0]), ToInt(indices[1])
 
-	charCount := strings.Count(password.Value, policyChar)
+	char1, char2 := string(password.Value[index1-1]), string(password.Value[index2-1])
 
-	return charCount >= lowerFreq && charCount <= upperFreq
+	return char1 != char2 && (char1 == policyChar || char2 == policyChar)
 }
 
 func Solve(passwordList []string) int {
